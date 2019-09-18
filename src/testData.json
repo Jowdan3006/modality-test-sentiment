@@ -1,0 +1,150 @@
+
+{
+  "@odata.context": "https://graph.microsoft.com/beta/$metadata#teams('e036ad42-2252-4e33-a301-4f21a9ac680a')/channels('19%3Aff311721a2a14aff945d8f85c6c4a231%40thread.skype')/messages",
+  "@odata.count": 4,
+  "value": [
+      {
+          "id": "1568805615966",
+          "replyToId": null,
+          "etag": "1568805615966",
+          "messageType": "message",
+          "createdDateTime": "2019-09-18T11:20:15.966Z",
+          "lastModifiedDateTime": null,
+          "deletedDateTime": null,
+          "subject": "",
+          "summary": null,
+          "importance": "normal",
+          "locale": "en-us",
+          "webUrl": "https://teams.microsoft.com/l/message/19%3Aff311721a2a14aff945d8f85c6c4a231%40thread.skype/1568805615966?groupId=e036ad42-2252-4e33-a301-4f21a9ac680a&tenantId=f7af6be0-1017-4a4e-8e81-5325b780ef98&createdTime=1568805615966&parentMessageId=1568805615966",
+          "policyViolation": null,
+          "from": {
+              "application": null,
+              "device": null,
+              "conversation": null,
+              "user": {
+                  "id": "ab753296-d4fd-4cba-9aba-2b344334daf0",
+                  "displayName": "Ross",
+                  "userIdentityType": "aadUser"
+              }
+          },
+          "body": {
+              "contentType": "text",
+              "content": "all hate the time"
+          },
+          "attachments": [],
+          "mentions": [],
+          "reactions": []
+      },
+      {
+          "id": "1568805607201",
+          "replyToId": null,
+          "etag": "1568805607201",
+          "messageType": "message",
+          "createdDateTime": "2019-09-18T11:20:07.201Z",
+          "lastModifiedDateTime": null,
+          "deletedDateTime": null,
+          "subject": "",
+          "summary": null,
+          "importance": "normal",
+          "locale": "en-us",
+          "webUrl": "https://teams.microsoft.com/l/message/19%3Aff311721a2a14aff945d8f85c6c4a231%40thread.skype/1568805607201?groupId=e036ad42-2252-4e33-a301-4f21a9ac680a&tenantId=f7af6be0-1017-4a4e-8e81-5325b780ef98&createdTime=1568805607201&parentMessageId=1568805607201",
+          "policyViolation": null,
+          "from": {
+              "application": null,
+              "device": null,
+              "conversation": null,
+              "user": {
+                  "id": "ab753296-d4fd-4cba-9aba-2b344334daf0",
+                  "displayName": "Ross",
+                  "userIdentityType": "aadUser"
+              }
+          },
+          "body": {
+              "contentType": "text",
+              "content": "need to stop hatting"
+          },
+          "attachments": [],
+          "mentions": [],
+          "reactions": []
+      },
+      {
+          "id": "1568805594541",
+          "replyToId": null,
+          "etag": "1568805594541",
+          "messageType": "message",
+          "createdDateTime": "2019-09-18T11:19:54.541Z",
+          "lastModifiedDateTime": null,
+          "deletedDateTime": null,
+          "subject": "",
+          "summary": null,
+          "importance": "normal",
+          "locale": "en-us",
+          "webUrl": "https://teams.microsoft.com/l/message/19%3Aff311721a2a14aff945d8f85c6c4a231%40thread.skype/1568805594541?groupId=e036ad42-2252-4e33-a301-4f21a9ac680a&tenantId=f7af6be0-1017-4a4e-8e81-5325b780ef98&createdTime=1568805594541&parentMessageId=1568805594541",
+          "policyViolation": null,
+          "from": {
+              "application": null,
+              "device": null,
+              "conversation": null,
+              "user": {
+                  "id": "ab753296-d4fd-4cba-9aba-2b344334daf0",
+                  "displayName": "Ross",
+                  "userIdentityType": "aadUser"
+              }
+          },
+          "body": {
+              "contentType": "text",
+              "content": "love the work being produced "
+          },
+          "attachments": [],
+          "mentions": [],
+          "reactions": []
+      },
+      {
+          "id": "1568805585041",
+          "replyToId": null,
+          "etag": "1568805585041",
+          "messageType": "message",
+          "createdDateTime": "2019-09-18T11:19:45.041Z",
+          "lastModifiedDateTime": null,
+          "deletedDateTime": null,
+          "subject": "",
+          "summary": null,
+          "importance": "normal",
+          "locale": "en-us",
+          "webUrl": "https://teams.microsoft.com/l/message/19%3Aff311721a2a14aff945d8f85c6c4a231%40thread.skype/1568805585041?groupId=e036ad42-2252-4e33-a301-4f21a9ac680a&tenantId=f7af6be0-1017-4a4e-8e81-5325b780ef98&createdTime=1568805585041&parentMessageId=1568805585041",
+          "policyViolation": null,
+          "from": {
+              "application": null,
+              "device": null,
+              "conversation": null,
+              "user": {
+                  "id": "ab753296-d4fd-4cba-9aba-2b344334daf0",
+                  "displayName": "Ross",
+                  "userIdentityType": "aadUser"
+              }
+          },
+          "body": {
+              "contentType": "html",
+              "content": "<div><div><at id=\"0\">Jordan</at> this is shit</div>\n</div>"
+          },
+          "attachments": [],
+          "mentions": [
+              {
+                  "id": 0,
+                  "mentionText": "Jordan",
+                  "mentioned": {
+                      "application": null,
+                      "device": null,
+                      "conversation": null,
+                      "user": {
+                          "id": "8b6b5cec-ac62-46de-a995-20f3db462247",
+                          "displayName": "Jordan",
+                          "userIdentityType": "aadUser"
+                      }
+                  }
+              }
+          ],
+          "reactions": []
+      }
+  ]
+}
