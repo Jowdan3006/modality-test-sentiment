@@ -24,17 +24,6 @@ class MainComponent extends Component {
         })
         return chatMessages
     }
-
-    ProgressBar = (props) =>{
-        return(
-            <div className="progress-bar">
-                <Filler percentage={props.percentage}/>
-            </div>
-        )
-    }
-    Filler = (props) => {
-        return<div className="filler" style={{ width: `${props.percentage}%`}}/>
-    }
     // display purpices only till code is returning the sentiment string
 
     Chat = () =>{
