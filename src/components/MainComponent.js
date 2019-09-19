@@ -1,43 +1,47 @@
 import React, {Component} from 'react';
 import chat1 from '../testData.json'
 
-class MainComponent extends Component { 
+class MainComponent extends Component {
+    state = {
+        response: null,
+        responseFetched: false,
+        chat: null
+    }
 
-    // Chat = () =>{
-    //     let regex = /(<([^>]+)>)/ig;
-    //     let chatMessages = chat1.value.map((textDataDetail , index)=>{
-    //         return <div key={index}>
-    //                     {textDataDetail.body.content.replace(regex, '')}
-    //                 </div>
-    //     })
-    //     return chatMessages
-    // }
-
-    Chat = () =>{
-        let regex = /(<([^>]+)>)/ig;
-        let chatMessages = chat1.value.map((textDataDetail , index)=>{
-            return {
-                    "language": "en",
-                    "id": index,
-                    "text": textDataDetail.body.content.replace(regex, '')
-                    }
-                    // has to be in the order id language, id then text if not in this order then api wont work.
-                   
+    ChatSet = () => {
+        let chatMessages = this.state.chat.documents.map((document , index)=>{
+            return <div key={index}>
+                        {document.id}
+                        {document.language}
+                        {document.score}
+                        {document.text}
+                    </div>
         })
         return chatMessages
     }
-    // ChatTitle = () =>{
-    //     let regex = /(<([^>]+)>)/ig;
-    //     let chat = chat1.value.map((wholeBody , index)=>{
-    //         return <span key={index}>
-    //                     {wholeBody}
-    //                 </span>
-    //     })
-    //     return chat
-    // }
 
-    handleSubmit(){
-        let responseDemo = {"documents": this.Chat()}; 
+    Sentiment = () =>{
+        
+
+    }
+    // display purpices only till code is returning the sentiment string
+
+    Chat = () =>{
+        let regex = /(<([^>]+)>)/ig;
+        let chatMessages = chat1.value.map((textDataDetail )=>{
+            return {
+                        "id": textDataDetail.id,
+                        "language" : "en",
+                        "text": textDataDetail.body.content.replace(regex, '')
+                    }
+                   
+        })
+        let document = { "documents": chatMessages }
+        return document
+    }
+
+    handleSubmit(chat){
+        let responseDemo;
         fetch('https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment', {
             method: "POST",
             headers:{
@@ -45,26 +49,52 @@ class MainComponent extends Component {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
-            body: this.Chat(),
-        }).then(Response => Response.json())
-          .then(responseData =>  responseDemo);
-       }; 
-       /*
-        returning bad object as this is sending [object Object] and if you look into the [object Object]
-        it displays the data as 
-        id
-        language
-        text
-        i need to it send as one item and not many object arrays. 
-       */
+            body:JSON.stringify(chat)
+        })
+        .then(Response => Response.json())
+        .then(response => {
+                // new empty array
+                let resSub = {documents: []};
+                // loop through response
+                response.documents.forEach( 
+                    document => {
+                        this.state.chat.documents.forEach( 
+                            chatDoc => {
+                                // compare the current document array id to the state chat id in a loop
+                                if(document.id === chatDoc.id) {
+                                    // add key value pair for score to the empty array
+                                    chatDoc.score = document.score;
+                                    resSub.documents.push(chatDoc);
+                                }
+                            }
+                        );
+                    }
+                );
+                // setstate the current chat to the new array
+                console.log("Data Fetched");
+                this.setState({chat: resSub})
+            } 
+        );
+    };
 
+    componentDidMount() {
+        console.log("Mount Start");
+        let chat = this.Chat();
+        this.handleSubmit(chat);
+        this.setState({
+            chat
+        })
+        console.log("Mount Finish");
+    }
+
+    
   render() {
-      console.log(this.handleSubmit());
-      console.log(this.Chat());
+    console.log("Render Start");
+    console.log(this.state.chat);
+
     return (
         <div>
-            {/* {this.Chat()} */}
-            {/* {this.handleSubmit()} */}
+            {this.state.chat === null ? <div><p>We are fetching details</p></div> : this.ChatSet()}
         </div>
     )
   }
