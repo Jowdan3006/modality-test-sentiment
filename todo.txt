@@ -1,0 +1,5 @@
+added progress bar.
+style page.
+style bar.
+set colors to parshels.
+rename some functions.
