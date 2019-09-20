@@ -31,7 +31,9 @@ class Channels extends Component {
         <Route path={`/${this.props.team.displayName}/${channel.displayName}`} key={`Route${index}`} render={() => 
           <Channel
             channel={channel}
-            teamChannelsMessages={this.props.teamChannelsMessages ? this.props.teamChannelsMessages.filter(channelMessages => channelMessages.id === channel.id) : this.props.teamChannelsMessages}
+            ChannelMessages={this.props.teamChannelsMessages ? 
+              this.props.teamChannelsMessages.filter(channelMessages => channelMessages.id === channel.id)[0] : 
+              this.props.teamChannelsMessages}
           />
         }/>
       );
@@ -40,23 +42,18 @@ class Channels extends Component {
   }
 
   render() {
-    console.log(this.props.teamChannelsMessages);
-    if (this.props.teamChannelsMessages) {
-      this.props.teamChannelsMessages.forEach(channelMessages => {
-        console.log(channelMessages.id)
-      })
+    if (this.props.teamChannels && this.props.teamChannels.length !== 0) {
+      return (
+        <div>
+          <Route exact path={`/${this.props.team.displayName}`} render={() => this.displayChannelLinks()} />
+          {this.displayChannelRoutes()}
+        </div>
+      );
+    } else {
+      return (
+        <div>Getting Channels</div>
+      )
     }
-    return (
-      <div>
-        {this.props.teamChannels && this.props.teamChannels.length !== 0 ? 
-          <div>
-            <Route exact path={`/${this.props.team.displayName}`} render={() => this.displayChannelLinks()} />
-            {this.displayChannelRoutes()}
-          </div>
-        : <div>Getting Channels</div>
-        }
-      </div>
-    )
   }
 }
 

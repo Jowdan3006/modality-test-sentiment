@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import { UserAgentApplication } from "msal";
+import {
+  HashRouter
+} from "react-router-dom"
 
 import Login from '../components/Login';
 import Sentiment from '../components/Sentiment';
@@ -40,7 +43,7 @@ class App extends Component {
     error: null,
     joinedTeams: null,
     teamChannels: null,
-    teamChannelsMessages: null
+    teamChannelsMessages: []
   }
 
   requiresInteraction = errorMessage => {
@@ -174,7 +177,6 @@ class App extends Component {
   }
 
   getTeamChannelsMessages(tokenResponse, id) {
-    let teamChannelsMessages = []
     this.state.teamChannels.value.forEach(async channel => {
       let messageUrl = this.state.GRAPH_ENDPOINTS.MESSAGES;
       messageUrl = messageUrl.replace("{group-id-for-teams}", id);
@@ -187,28 +189,35 @@ class App extends Component {
             error: "Unable to fetch channel messages"
         });
       });
-      teamChannelsMessages.push({id: channel.id, channelMessages});
+      this.setState({ teamChannelsMessages: [...this.state.teamChannelsMessages, {id: channel.id, channelMessages: channelMessages}] });
     })
-    this.setState({teamChannelsMessages})
   }
 
   render() {
-    return (
-      <div>
-        {this.state.account ?
-          this.state.joinedTeams ? 
+    if (this.state.account) {
+      if (this.state.joinedTeams) {
+        return (
+          <HashRouter>
             <Sentiment 
               joinedTeams={this.state.joinedTeams}
               getTeamChannels={this.getTeamChannels}
               teamChannels={this.state.teamChannels}
               teamChannelsMessages={this.state.teamChannelsMessages}
             /> 
-            : <div>Getting Joined Teams</div>
-          : <Login onSignIn={this.onSignIn.bind(this)} />
-        }
-      </div>
-    )
+          </HashRouter>
+        );
+      } else {
+        return (
+          <div>Getting Joined Teams</div>
+        );
+      }
+    } else {
+      return (
+        <Login onSignIn={this.onSignIn.bind(this)} />   
+      );
+    }
   }
+
 }
 
 export default App;

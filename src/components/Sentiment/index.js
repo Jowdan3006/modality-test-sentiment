@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   NavLink,
-  HashRouter,
   Route
 } from "react-router-dom"
 
@@ -36,18 +35,21 @@ class Sentiment extends Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.props.joinedTeams === undefined || this.props.joinedTeams.length === 0 ? 
-          <div>No Teams to display</div>
-        : <HashRouter>
+    console.log(this.props.teamChannelsMessages);
+    if (this.props.joinedTeams === undefined || this.props.joinedTeams.length === 0) {
+      return (
+        <div>No Teams to display</div>
+      );
+    } else {
+      return (
+        <div>
           <Route exact path="/" render={() => this.displayJoinedTeamsLinks()} />
           {this.displayJoinedTeamsRoutes()}
-        </HashRouter>
-        }
-      </div>
-    )
+        </div>
+      );
+    }
   }
+
 }
 
 export default Sentiment;
