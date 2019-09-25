@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import chat1 from '../testData.json'
+import chat1 from '../testData.json';
+import SentimentValue from './SentimentValue';
 
 class MainComponent extends Component {
     state = {
@@ -17,7 +18,7 @@ class MainComponent extends Component {
                             {/* if you want the id or language of the post uncomment the document.id for the id and the document.language for the language if you need it. */}
                             {/* <li>{document.id}</li> */}
                             {/* <li>{document.language}</li> */}
-                            <li>{parseFloat(Math.round(document.score * 100)).toFixed(2) + " %"}</li>
+                            <li>{<SentimentValue score={parseFloat(Math.round(document.score * 100)).toFixed(2)}/>}</li>
                             <li>{document.text}</li>
                         </ul>
                     </div>
@@ -45,7 +46,7 @@ class MainComponent extends Component {
         fetch('https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment', {
             method: "POST",
             headers:{
-                "Ocp-Apim-Subscription-Key": "28ee5326ee394d9d8525159edaa73b26",
+                "Ocp-Apim-Subscription-Key": "064e6defe25c445bb9acbcb577ed9f36",
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
@@ -95,10 +96,9 @@ class MainComponent extends Component {
     return (
         <div>
             {
-                this.state.chat === null ? <div>
-                                               <p>We are fetching details</p>
-                                           </div> : 
-                                           this.ChatSet()
+                this.state.chat === null ? 
+                    <div> <p>We are fetching details</p> </div> : 
+                    this.ChatSet()
             }
         </div>
     )
