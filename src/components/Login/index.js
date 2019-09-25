@@ -3,7 +3,11 @@ import React, { Component } from "react";
 class Login extends Component {
   render() {
     return (
-      <button onClick={this.props.onSignIn}>Sign In</button>
+      <div className="welcomePage">
+        <div className="buttonWrapper">
+          <button onClick={this.props.onSignIn}>Sign In</button>
+        </div>
+      </div>
     )
   }
 }

@@ -193,18 +193,27 @@ class App extends Component {
     })
   }
 
+  signOut = () => {
+    this.state.msalApp.logout();
+  }
+
   render() {
     if (this.state.account) {
       if (this.state.joinedTeams) {
         return (
-          <HashRouter>
-            <Sentiment 
-              joinedTeams={this.state.joinedTeams}
-              getTeamChannels={this.getTeamChannels}
-              teamChannels={this.state.teamChannels}
-              teamChannelsMessages={this.state.teamChannelsMessages}
-            /> 
-          </HashRouter>
+          <div class="content">
+            <header>
+              <button onClick={this.signOut} >Sign Out</button>
+            </header>
+            <HashRouter>
+              <Sentiment 
+                joinedTeams={this.state.joinedTeams}
+                getTeamChannels={this.getTeamChannels}
+                teamChannels={this.state.teamChannels}
+                teamChannelsMessages={this.state.teamChannelsMessages}
+              /> 
+            </HashRouter>
+          </div>
         );
       } else {
         return (
