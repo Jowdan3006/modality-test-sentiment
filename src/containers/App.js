@@ -50,8 +50,6 @@ class App extends Component {
     if (!errorMessage || !errorMessage.length) {
         return false;
     }
-
-    return (
         errorMessage.indexOf("consent_required") > -1 ||
         errorMessage.indexOf("interaction_required") > -1 ||
         errorMessage.indexOf("login_required") > -1
