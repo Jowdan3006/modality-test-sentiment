@@ -4,6 +4,8 @@ import {
   HashRouter
 } from "react-router-dom"
 
+import update from 'immutability-helper';
+
 import Login from '../components/Login';
 import Sentiment from '../components/Sentiment';
 
@@ -43,6 +45,7 @@ class App extends Component {
     error: null,
     joinedTeams: null,
     teamChannels: null,
+    teamChannelsFetchCount: 0,
     teamChannelsMessages: []
   }
 
@@ -50,6 +53,7 @@ class App extends Component {
     if (!errorMessage || !errorMessage.length) {
         return false;
     }
+    return (
         errorMessage.indexOf("consent_required") > -1 ||
         errorMessage.indexOf("interaction_required") > -1 ||
         errorMessage.indexOf("login_required") > -1
@@ -166,7 +170,9 @@ class App extends Component {
         });
         if (teamChannels) {
           this.setState({
-            teamChannels
+            teamChannels,
+            teamChannelsFetchCount: 0,
+            teamChannelsFetched: false
           });
           this.getTeamChannelsMessages(tokenResponse, id);
         }
@@ -187,7 +193,57 @@ class App extends Component {
             error: "Unable to fetch channel messages"
         });
       });
-      this.setState({ teamChannelsMessages: [...this.state.teamChannelsMessages, {id: channel.id, channelMessages: channelMessages}] });
+      this.setState({ 
+        teamChannelsMessages: [...this.state.teamChannelsMessages, {id: channel.id, channelMessages: channelMessages}],
+        teamChannelsFetchCount: ++this.state.teamChannelsFetchCount
+      });
+      if (this.state.teamChannelsFetchCount === this.state.teamChannels.value.length) {
+        this.getScoreForChannels()
+      }
+    })
+  }
+
+  getTextAnalyticsDocument = (channelMessages) => {
+    let regex = /(<([^>]+)>)/ig;
+    let chatMessages = channelMessages.value.map((textDataDetail) => {
+      return {
+        "id": textDataDetail.id,
+        "language": "en",
+        "text": textDataDetail.body.content.replace(regex, '')
+      }
+    })
+    let documents = { "documents": chatMessages }
+    return documents;
+  }
+
+  getScoreForChannels = () => {
+    let teamChannelsMessages = this.state.teamChannelsMessages;
+    teamChannelsMessages.forEach(async (teamChannelMessages, index) => {
+      let channelDocuments = this.getTextAnalyticsDocument(teamChannelMessages.channelMessages);
+      await fetch('https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.1/sentiment', {
+        method: "POST",
+        headers: {
+          "Ocp-Apim-Subscription-Key": "064e6defe25c445bb9acbcb577ed9f36",
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify(channelDocuments)
+      })
+      .then(response => response.json())
+      .then(responseJson => {
+        // loop through response
+        teamChannelMessages.channelMessages.value.forEach(channelMessage => {
+          responseJson.documents.forEach(responseMessage => {
+            // compare the current document array id to the state chat id in a loop
+            if (channelMessage.id === responseMessage.id) {
+              // add key value pair for score to the empty array
+              channelMessage.score = responseMessage.score;
+            }
+          })
+        })
+        let updatedteamChannelsMessages = update(this.state.teamChannelsMessages, {[index]: {$set: teamChannelMessages}})
+        this.setState({teamChannelsMessages: updatedteamChannelsMessages});
+      })
     })
   }
 

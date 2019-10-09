@@ -9,6 +9,7 @@ import Channel from './Channel';
 class Channels extends Component {
   componentDidMount() {
     this.props.getTeamChannels(this.props.team.id);
+    console.log("Channels Mount")
   }
 
   displayChannelLinks() {
@@ -31,7 +32,7 @@ class Channels extends Component {
         <Route path={`/${this.props.team.displayName}/${channel.displayName}`} key={`Route${index}`} render={() => 
           <Channel
             channel={channel}
-            ChannelMessages={this.props.teamChannelsMessages ? 
+            channelMessages={this.props.teamChannelsMessages ? 
               this.props.teamChannelsMessages.filter(channelMessages => channelMessages.id === channel.id)[0] : 
               this.props.teamChannelsMessages}
           />
